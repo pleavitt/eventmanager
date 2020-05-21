@@ -1,13 +1,24 @@
 import React, { useState } from 'react'
-import Events from '../pages/Events';
 import logo from '../logo.svg';
 import Transition from "./Transition";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 const Layout = props => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  console.log('props', props)
+  const location = useLocation();
+  console.log('props.location.pathname', location.pathname.substring(1))
+  const getTitle = () => {
+    switch(location.pathname.substring(1)){
+        case "event":
+            return "Event";
+        case "events":
+            return "Events";
+        default:
+            return "Dashboard"
+    }
+}
+
   return (
     <div>
       <div className="bg-gray-800 pb-32">
@@ -109,7 +120,7 @@ const Layout = props => {
         <header className="py-10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 className="text-3xl leading-9 font-bold text-white">
-              Dashboard
+              {getTitle()}
           </h1>
           </div>
         </header>

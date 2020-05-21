@@ -11,7 +11,7 @@ const initialState = [
   },
   {
     id: 2,
-    name: "Boats and Hoes",
+    name: "Boat Cruise",
     start: new Date(),
     capacity: 100,
     startLocation: "Big Boat"
@@ -28,7 +28,6 @@ const initialState = [
     name: "Catalina Wine Mixer",
     start: new Date(),
     capacity: 50,
-    
     startLocation: "Napa Valley"
   },
 ]
