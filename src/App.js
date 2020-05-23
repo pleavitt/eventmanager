@@ -11,7 +11,7 @@ function App() {
     <Layout>
         <Route exact path='/' component={Events} />
         <Route exact path='/events' component={Events} />
-        <Route path='/event' component={Event} />
+        <Route path='/events/:id' component={Event} />
     </Layout>
   );
 }

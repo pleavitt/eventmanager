@@ -4,13 +4,18 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import './styles/main.css';
 import './index.css';
+
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+
+import EventProvider from './context/EventContext';
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <App />
+      <EventProvider>
+        <App />
+      </EventProvider>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')

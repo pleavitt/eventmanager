@@ -7,7 +7,6 @@ const Layout = props => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-  console.log('props.location.pathname', location.pathname.substring(1))
   const getTitle = () => {
     switch(location.pathname.substring(1)){
         case "event":

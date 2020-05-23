@@ -1,34 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router';
 import { format } from 'date-fns'
+import { useEvents } from '../context/EventContext'
 
-
-const event = {
-  id: 1,
-  name: "State of Origin",
-  start: new Date(),
-  capacity: 50000,
-  notes: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi euismod pretium aliquam.",
-  startLocation: "Suncorp Stadium",
-  attendees: [
-    {
-      name: "Wendell Barnes",
-      company: "John Holland",
-      guests: 3,
-      image: ""
-    },
-    {
-      name: "Darren Lockyer",
-      company: "Brisbane Broncos",
-      guests: 0,
-      image: ""
-    },
-    {
-      name: "Damon Wayans",
-      guests: 10,
-      image: ""
-    },
-  ]
-}
 
 const Attendee = ({ name, company, guests }) => {
   return (
@@ -45,7 +19,7 @@ const Attendee = ({ name, company, guests }) => {
               </div>
               <div className="mt-2 flex">
                 <div className="flex items-center text-sm leading-5 text-gray-500">
-                {
+                  {
                     guests > 0 && (
                       <>
                         <svg className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
@@ -82,7 +56,20 @@ const Attendee = ({ name, company, guests }) => {
   )
 }
 
-const Event = () => {
+const Event = props => {
+  const { events, getAttendee, getEvent, addAttendee } = useEvents()
+  const [event, setEvent] = useState(null)
+  const { id } = useParams();
+  //on creation, get the location of the user
+
+  useEffect(() => {
+    setEvent(getEvent(id))
+  }, [events])
+
+  console.log('rendering event', event)
+  if (!event) {
+    return <div>Loading...</div>
+  }
   return (
     <div className="bg-white overflow-hidden sm:rounded-lg">
       <div className="px-4 py-5 sm:px-6">
@@ -102,7 +89,7 @@ const Event = () => {
               </button>
             </span>
             <span className="inline-flex rounded-md shadow-sm">
-              <button type="button" className="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700">
+              <button onClick={() => addAttendee(event.attendees[1])} type="button" className="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700">
                 <svg className="-ml-1 mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
                 </svg>
@@ -110,7 +97,7 @@ const Event = () => {
               </button>
             </span>
           </div>
-        </div>      
+        </div>
       </div>
       <div className="px-4 py-5 sm:px-6">
         <dl className="grid grid-cols-1 col-gap-4 row-gap-8 sm:grid-cols-2">
@@ -158,13 +145,18 @@ const Event = () => {
             <dt className="text-sm leading-5 font-medium text-gray-500">
               Attendees
             </dt>
-            <div className="bg-white shadow overflow-hidden sm:rounded-md">
-              <ul>
-                {event.attendees.length && (
-                  event.attendees.map((attendee, index) => <Attendee key={index} {...attendee} />)
-                )}
-              </ul>
-            </div>
+            {event.attendees.length > 0
+              ? (
+                <div className="bg-white shadow overflow-hidden sm:rounded-md">
+                  <ul>
+                    {(event.attendees.map((attendee, index) => <Attendee key={index} {...attendee} />))}
+                  </ul>
+                </div>
+              )
+              : <div>No Attendees Currently</div>
+            }
+
+
           </div>
         </dl>
       </div>

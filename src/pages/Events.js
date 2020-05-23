@@ -1,40 +1,14 @@
 import React, { useState } from 'react'
 import { format } from 'date-fns'
+import { useEvents } from '../context/EventContext'
 
 const initialState = [
-  {
-    id: 1,
-    name: "State of Origin",
-    start: new Date(),
-    capacity: 50000,
-    startLocation: "Suncorp Stadium"
-  },
-  {
-    id: 2,
-    name: "Boat Cruise",
-    start: new Date(),
-    capacity: 100,
-    startLocation: "Big Boat"
-  },
-  {
-    id: 3,
-    name: "WWE",
-    start: new Date(),
-    capacity: 30000,
-    startLocation: "ANZ Stadium"
-  },
-  {
-    id: 4,
-    name: "Catalina Wine Mixer",
-    start: new Date(),
-    capacity: 50,
-    startLocation: "Napa Valley"
-  },
+  
 ]
 
-const EventPreview = ({ name, capacity, startLocation, start }) => (
+const EventPreview = ({ name, capacity, startLocation, start, id }) => (
   <li>
-    <a href="#" className="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out">
+    <a href={`/events/${id}`} className="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out">
       <div className="px-4 py-4 sm:px-6">
         <div className="flex items-center justify-between">
           <div className="text-sm leading-5 font-medium text-indigo-600 truncate">
@@ -77,7 +51,7 @@ const EventPreview = ({ name, capacity, startLocation, start }) => (
 )
 
 const Events = () => {
-  const [events, setEvents] = useState(initialState)
+  const { events } = useEvents()
 
   return (
     <div>
