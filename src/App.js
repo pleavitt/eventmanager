@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Route } from "react-router-dom";
+import React from 'react';
+import { Route } from 'react-router-dom';
 
 import './App.css';
 import Layout from './components/Layout';
@@ -9,9 +9,9 @@ import Event from './pages/Event';
 function App() {
   return (
     <Layout>
-        <Route exact path='/' component={Events} />
-        <Route exact path='/events' component={Events} />
-        <Route path='/events/:id' component={Event} />
+      <Route exact path="/" component={Events} />
+      <Route exact path="/events" component={Events} />
+      <Route path="/events/:id" component={Event} />
     </Layout>
   );
 }

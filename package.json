@@ -15,7 +15,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-transition-group": "^4.4.1",
-    "tailwind": "^4.0.0"
+    "tailwind": "^4.0.0",
+    "@tailwindcss/ui": "^0.3.0"
   },
   "scripts": {
     "start": "npm run watch:css && react-scripts start",
@@ -40,7 +41,6 @@
   },
   "devDependencies": {
     "@abhijithvijayan/eslint-config": "1.4.0",
-    "@tailwindcss/ui": "^0.3.0",
     "@typescript-eslint/eslint-plugin": "2.31.0",
     "@typescript-eslint/parser": "2.31.0",
     "babel-eslint": "10.1.0",

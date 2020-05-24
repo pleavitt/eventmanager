@@ -6,6 +6,12 @@
     "rules": {
         "linebreak-style": 0,
         "react/jsx-props-no-spreading": 0,
+        "no-unused-expressions": [
+            "error",
+            {
+                "allowShortCircuit": true
+            }
+        ],
         "prettier/prettier": [
             "error",
             {
