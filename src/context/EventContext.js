@@ -1,61 +1,62 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import { restAPI } from '../utils/API';
 
-const eventsData = [
-  {
-    id: 1,
-    name: 'State of Origin',
-    start: new Date(),
-    capacity: 50000,
-    startLocation: 'Suncorp Stadium',
-    attendees: [
-      {
-        name: 'Wendell Barnes',
-        company: 'John Holland',
-        guests: 3,
-        tickets: [1, 2, 3, 4],
-        image: '',
-      },
-      {
-        name: 'Darren Lockyer',
-        company: 'Brisbane Broncos',
-        guests: 0,
-        tickets: [5],
+// const eventsData = [
+//   {
+//     id: 1,
+//     name: 'State of Origin',
+//     start: new Date(),
+//     capacity: 50000,
+//     startLocation: 'Suncorp Stadium',
+//     attendees: [
+//       {
+//         name: 'Wendell Barnes',
+//         company: 'John Holland',
+//         guests: 3,
+//         tickets: [1, 2, 3, 4],
+//         image: '',
+//       },
+//       {
+//         name: 'Darren Lockyer',
+//         company: 'Brisbane Broncos',
+//         guests: 0,
+//         tickets: [5],
 
-        image: '',
-      },
-      {
-        name: 'Damon Wayans',
-        guests: 10,
-        tickets: [6, 7, 8, 9, 10, 11, 12, 13, 88, 106],
-        image: '',
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: 'Boat Cruise',
-    start: new Date(),
-    capacity: 100,
-    startLocation: 'Big Boat',
-    attendees: [],
-  },
-  {
-    id: 3,
-    name: 'WWE',
-    start: new Date(),
-    capacity: 30000,
-    startLocation: 'ANZ Stadium',
-    attendees: [],
-  },
-  {
-    id: 4,
-    name: 'Catalina Wine Mixer',
-    start: new Date(),
-    capacity: 50,
-    startLocation: 'Napa Valley',
-    attendees: [],
-  },
-];
+//         image: '',
+//       },
+//       {
+//         name: 'Damon Wayans',
+//         guests: 10,
+//         tickets: [6, 7, 8, 9, 10, 11, 12, 13, 88, 106],
+//         image: '',
+//       },
+//     ],
+//   },
+//   {
+//     id: 2,
+//     name: 'Boat Cruise',
+//     start: new Date(),
+//     capacity: 100,
+//     startLocation: 'Big Boat',
+//     attendees: [],
+//   },
+//   {
+//     id: 3,
+//     name: 'WWE',
+//     start: new Date(),
+//     capacity: 30000,
+//     startLocation: 'ANZ Stadium',
+//     attendees: [],
+//   },
+//   {
+//     id: 4,
+//     name: 'Catalina Wine Mixer',
+//     start: new Date(),
+//     capacity: 50,
+//     startLocation: 'Napa Valley',
+//     attendees: [],
+//   },
+// ];
 
 const newAttendee = {
   name: 'Wendy Winkler',
@@ -76,12 +77,29 @@ export const EventProvider = (props) => {
     return events.find((event) => event.id === parseInt(id, 10));
   };
 
-  const getEvents = () => {
-    setEvents([...eventsData]);
-  };
-
   useEffect(() => {
-    getEvents();
+    restAPI
+      .get('/Events')
+      .then(({data}) => {
+        console.log('api data', data)
+        setEvents([...data]);
+      })
+      .catch((error) => {
+        // handle error
+        console.log('Unable to Retrieve Events', error);
+      });
+
+      restAPI
+      .get('/TodoLists')
+      .then(({data}) => {
+        console.log('api data', data)
+      })
+      .catch((error) => {
+        // handle error
+        console.log('Unable to Retrieve TodoLists', error);
+      });
+
+      
   }, []);
 
   useEffect(() => {}, [events]);

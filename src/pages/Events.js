@@ -2,7 +2,7 @@ import React from 'react';
 import { format } from 'date-fns';
 import { useEvents } from '../context/EventContext';
 
-const EventPreview = ({ name, capacity, startLocation, start, id }) => (
+const EventPreview = ({ name, capacity, locationStart, timeStart, id }) => (
   <li>
     <a
       href={`/events/${id}`}
@@ -43,7 +43,7 @@ const EventPreview = ({ name, capacity, startLocation, start, id }) => (
                   clipRule="evenodd"
                 />
               </svg>
-              {startLocation}
+              {locationStart}
             </div>
           </div>
           <div className="mt-2 flex items-center text-sm leading-5 text-gray-500 sm:mt-0">
@@ -62,7 +62,7 @@ const EventPreview = ({ name, capacity, startLocation, start, id }) => (
               Commencing
               <time dateTime="2020-01-07">
                 {' '}
-                {format(start, 'MMM, dd yyyy')}
+                {format(new Date(timeStart), 'MMM, dd yyyy')}
               </time>
             </span>
           </div>
