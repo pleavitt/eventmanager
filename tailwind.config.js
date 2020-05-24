@@ -4,7 +4,11 @@ module.exports = {
     './src/**/*.js',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontSize: {
+        'xxs': '.5rem'
+      }
+    },
   },
   variants: {},
   plugins: [

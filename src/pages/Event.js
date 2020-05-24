@@ -4,7 +4,7 @@ import { format } from 'date-fns'
 import { useEvents } from '../context/EventContext'
 
 
-const Attendee = ({ name, company, guests }) => {
+const Attendee = ({ name, company, guests, tickets }) => {
   return (
     <li className="border-t border-gray-200">
       <a href="#" className="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out">
@@ -19,12 +19,10 @@ const Attendee = ({ name, company, guests }) => {
               </div>
               <div className="mt-2 flex">
                 <div className="flex items-center text-sm leading-5 text-gray-500">
-                  {
-                    guests > 0 && (
+                  { guests > 0 && (
                       <>
                         <svg className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" fillRule="evenodd">
-                          </path>
+                          <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" fillRule="evenodd" />
                         </svg>
                         <span>
                           + {guests} guests
@@ -32,16 +30,21 @@ const Attendee = ({ name, company, guests }) => {
                       </>
                     )
                   }
-
                 </div>
               </div>
             </div>
             <div className="mt-4 flex-shrink-0 sm:mt-0">
               <div className="flex overflow-hidden">
-                <img className="inline-block h-6 w-6 rounded-full text-white shadow-solid" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-                <img className="-ml-1 inline-block h-6 w-6 rounded-full text-white shadow-solid" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-                <img className="-ml-1 inline-block h-6 w-6 rounded-full text-white shadow-solid" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80" alt="" />
-                <img className="-ml-1 inline-block h-6 w-6 rounded-full text-white shadow-solid" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                {tickets.map(ticket => (
+                  <div className="ml-2 flex-shrink-0 flex">
+                    <span className="px-2 inline-flex text-xxs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">
+                      <svg className="mx-1 h-7 w-7" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 6a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 100 4v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2a2 2 0 100-4V6z" />
+                        <text x="50%" y="55%" dominant-baseline="middle" class="text-indigo-100" font-size="smaller" text-anchor="middle">{ticket}</text>
+                      </svg>
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
