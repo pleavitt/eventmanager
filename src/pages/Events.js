@@ -1,11 +1,12 @@
 import React from 'react';
 import { format } from 'date-fns';
+import { NavLink } from 'react-router-dom';
 import { useEvents } from '../context/EventContext';
 
 const EventPreview = ({ name, capacity, locationStart, timeStart, id }) => (
   <li>
-    <a
-      href={`/events/${id}`}
+    <NavLink
+      to={`/events/${id}`}
       className="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"
     >
       <div className="px-4 py-4 sm:px-6">
@@ -68,7 +69,7 @@ const EventPreview = ({ name, capacity, locationStart, timeStart, id }) => (
           </div>
         </div>
       </div>
-    </a>
+    </NavLink>
   </li>
 );
 

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { format } from 'date-fns';
+import { useToast } from '../components/ToastContext';
 import { useEvents } from '../context/EventContext';
 
 const Attendee = ({ name, company, guests, tickets }) => {
+  const { addToast } = useToast();
   return (
     <li className="border-t border-gray-200">
       <a
@@ -91,6 +93,7 @@ const Event = () => {
   const { events, getEvent, addAttendee } = useEvents();
   const [event, setEvent] = useState(null);
   const { id } = useParams();
+  const { addToast } = useToast();
 
   useEffect(() => {
     setEvent(getEvent(id));
@@ -126,7 +129,7 @@ const Event = () => {
             </span>
             <span className="inline-flex rounded-md shadow-sm">
               <button
-                onClick={() => addAttendee(event.attendees[1])}
+                onClick={ () => { addToast(`${new Date()}`); }}
                 type="button"
                 className="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700"
               >
@@ -150,7 +153,7 @@ const Event = () => {
               Location
             </dt>
             <dd className="mt-1 text-sm leading-5 text-gray-900">
-              {event.startLocation}
+              {event.locationStart}
             </dd>
           </div>
           <div className="sm:col-span-1">
@@ -166,7 +169,7 @@ const Event = () => {
               Date
             </dt>
             <dd className="mt-1 text-sm leading-5 text-gray-900">
-              {format(event.start, 'dd MMMM yyyy h:mma', {
+              {format(new Date(event.timeStart), 'dd MMMM yyyy h:mma', {
                 useAdditionalWeekYearTokens: true,
               })}
             </dd>
@@ -189,7 +192,7 @@ const Event = () => {
             <dt className="text-sm leading-5 font-medium text-gray-500">
               Attendees
             </dt>
-            {event.attendees.length > 0 ? (
+            {event.attendees && event.attendees.length > 0 ? (
               <div className="bg-white shadow overflow-hidden sm:rounded-md">
                 <ul>
                   {event.attendees.map((attendee) => (

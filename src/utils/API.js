@@ -5,7 +5,7 @@ const mocky = axios.create({
   responseType: 'json',
 });
 
-const restAPI = axios.create({
+const api = axios.create({
   baseURL: 'https://localhost:5001/api',
   responseType: 'json',
   headers: {
@@ -13,9 +13,8 @@ const restAPI = axios.create({
   },
 });
 
-restAPI.interceptors.request.use(
+api.interceptors.request.use(
   (config) => {
-    console.log('Sending request', config);
     return config;
   },
   (error) => {
@@ -23,16 +22,13 @@ restAPI.interceptors.request.use(
   }
 );
 
-restAPI.interceptors.response.use(
+api.interceptors.response.use(
   (response) => response,
   (error) => {
     const { status, data, config } = error.response;
 
-    if (status === 401) {
-      console.log('unauthorised');
-    }
     return Promise.reject(error);
   }
 );
 
-export { mocky, restAPI };
+export { mocky, api };

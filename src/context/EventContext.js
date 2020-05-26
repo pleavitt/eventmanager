@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { restAPI } from '../utils/API';
+import { useToast } from '../components/ToastContext';
+import { api } from '../utils/API';
 
 // const eventsData = [
 //   {
@@ -71,35 +72,34 @@ const EventContext = createContext();
 // This component also receives Events and updates the list so other components can see the new list
 export const EventProvider = (props) => {
   const [events, setEvents] = useState([]);
-  // on creation, get the location of the user
+  const { addToast } = useToast();
 
+  // on creation, get the location of the user
   const getEvent = (id) => {
     return events.find((event) => event.id === parseInt(id, 10));
   };
 
   useEffect(() => {
-    restAPI
+    api
       .get('/Events')
-      .then(({data}) => {
-        console.log('api data', data)
+      .then(({ data }) => {
+        console.log('fetching api data', data);
         setEvents([...data]);
       })
       .catch((error) => {
-        // handle error
+        addToast(`Unable to Retrieve Events`);
         console.log('Unable to Retrieve Events', error);
       });
 
-      restAPI
+    api
       .get('/TodoLists')
-      .then(({data}) => {
-        console.log('api data', data)
+      .then(({ data }) => {
+        console.log('api data', data);
       })
       .catch((error) => {
-        // handle error
+        addToast(`Unable to Retrieve TodoLists`);
         console.log('Unable to Retrieve TodoLists', error);
       });
-
-      
   }, []);
 
   useEffect(() => {}, [events]);
