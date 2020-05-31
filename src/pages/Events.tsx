@@ -1,9 +1,15 @@
 import React from 'react';
 import { format } from 'date-fns';
 import { NavLink } from 'react-router-dom';
-import { useEvents } from '../context/EventContext';
+import { useEvents, Event } from '../context/EventContext';
 
-const EventPreview = ({ name, capacity, locationStart, timeStart, id }) => (
+const EventPreview: React.FC<Event> = ({
+  name,
+  capacity,
+  locationStart,
+  timeStart,
+  id,
+}) => (
   <li>
     <NavLink
       to={`/events/${id}`}
@@ -73,9 +79,8 @@ const EventPreview = ({ name, capacity, locationStart, timeStart, id }) => (
   </li>
 );
 
-const Events = () => {
+const Events: React.FC = () => {
   const { events } = useEvents();
-
   return (
     <div>
       <h1>Events</h1>

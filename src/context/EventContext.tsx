@@ -66,16 +66,41 @@ const newAttendee = {
   image: '',
 };
 
-const EventContext = createContext();
+export interface Event {
+  id: number;
+  name: string;
+  timeStart: Date;
+  capacity: number;
+  locationStart: string;
+  attendees: Attendee[];
+  notes?: string;
+}
+
+export interface Attendee {
+  name: string;
+  guests: number;
+  tickets: number[];
+  company?: string;
+}
+
+interface EventContext {
+  events: Event[];
+  getAttendee: () => Attendee;
+  addEvent: (event: Event) => void;
+  addAttendee: (attendee: Attendee) => void;
+  getEvent: (id: number) => Event;
+}
+
+const EventContext = createContext<EventContext>({} as EventContext);
 
 // This component retrieves the Events from the API so they can be read by all components
 // This component also receives Events and updates the list so other components can see the new list
-export const EventProvider = (props) => {
-  const [events, setEvents] = useState([]);
+export const EventProvider: React.FC<any> = (props) => {
+  const [events, setEvents] = useState<Event[]>([]);
   const { addToast } = useToast();
 
   // on creation, get the location of the user
-  const getEvent = (id) => {
+  const getEvent = (id: string) => {
     return events.find((event) => event.id === parseInt(id, 10));
   };
 
@@ -102,18 +127,17 @@ export const EventProvider = (props) => {
       });
   }, []);
 
-  useEffect(() => {}, [events]);
+  useEffect(() => { }, [events]);
 
   const getAttendee = () => {
     return newAttendee;
   };
 
-  const addEvent = (event) => {
+  const addEvent = (event: Event) => {
     event.name && setEvents(events.concat(event));
   };
 
-  const addAttendee = (attendee) => {
-    console.log('this', this);
+  const addAttendee = (attendee: Attendee) => {
     console.log('attendee', attendee);
   };
 

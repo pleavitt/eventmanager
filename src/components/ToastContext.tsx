@@ -1,16 +1,27 @@
 import React, { useState, useContext, createContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
-const ToastContext = createContext();
+export interface Toast {
+  id: number;
+  children: React.ReactNode;
+}
+
+interface ToastContext {
+  addToast: (content: string) => void;
+  removeToast: (id: number) => void;
+  toasts: Toast[];
+}
+
+const ToastContext = createContext<ToastContext>({} as ToastContext);
 
 let toastCount = 0;
-export function ToastProvider({ children }) {
-  const [toasts, setToasts] = useState([]);
+export const ToastProvider: React.FC<any> = ({ children }) => {
+  const [toasts, setToasts] = useState<Toast[]>([]);
 
   const addToast = useCallback(
     (content) => {
       const id = toastCount++;
-      const newToast = { content, id };
+      const newToast = { children: content, id };
       setToasts((prevToasts) => {
         return [...prevToasts, newToast];
       });
@@ -34,7 +45,7 @@ export function ToastProvider({ children }) {
       {children}
     </ToastContext.Provider>
   );
-}
+};
 
 ToastProvider.propTypes = {
   children: PropTypes.node,

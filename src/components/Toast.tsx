@@ -6,9 +6,9 @@ import { ReactComponent as CheckCircleIcon } from '../CheckCircle.svg';
 import { ReactComponent as CloseIcon } from '../Close.svg';
 
 import Transition from './Transition';
-import { useToast } from './ToastContext';
+import { useToast, Toast } from './ToastContext';
 
-export default function Toast({ children, toastId }) {
+const ToastElement: React.FC<Toast> = ({ children, id }) => {
   const { removeToast } = useToast();
   const [show, setShow] = useState(true);
   const [timedout, cancelTimeout, resetTimeout] = useTimeoutFn(hide, 5000);
@@ -32,7 +32,7 @@ export default function Toast({ children, toastId }) {
   useEffect(() => {
     return () => {
       if (show === false) {
-        removeToast(toastId);
+        removeToast(id);
       }
     };
   });
@@ -78,9 +78,11 @@ export default function Toast({ children, toastId }) {
       </div>
     </Transition>
   );
-}
-
-Toast.propTypes = {
-  children: PropTypes.node.isRequired,
-  toastId: PropTypes.number.isRequired,
 };
+
+ToastElement.propTypes = {
+  children: PropTypes.node.isRequired,
+  id: PropTypes.number.isRequired,
+};
+
+export default ToastElement;
