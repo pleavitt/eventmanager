@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { format } from 'date-fns';
-import { useToast } from '../components/ToastContext';
-import { useEvents } from '../context/EventContext';
+import { useEvents, Attendee, Event } from '../context/EventContext';
 
-const Attendee = ({ name, company, guests, tickets }) => {
-  const { addToast } = useToast();
+const AttendeeElement: React.FC<Attendee>= ({ name, company, guests, tickets }) => {
+  // const { addToast } = useToast();
   return (
     <li className="border-t border-gray-200">
       <a
@@ -89,11 +88,10 @@ const Attendee = ({ name, company, guests, tickets }) => {
   );
 };
 
-const Event = () => {
-  const { events, getEvent, addAttendee } = useEvents();
-  const [event, setEvent] = useState(null);
+const EventElement: React.FC = () => {
+  const { events, getEvent } = useEvents();
+  const [event, setEvent] = useState<Event | null>(null);
   const { id } = useParams();
-  const { addToast } = useToast();
 
   useEffect(() => {
     setEvent(getEvent(id));
@@ -129,7 +127,6 @@ const Event = () => {
             </span>
             <span className="inline-flex rounded-md shadow-sm">
               <button
-                onClick={ () => { addToast(`${new Date()}`); }}
                 type="button"
                 className="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700"
               >
@@ -195,8 +192,8 @@ const Event = () => {
             {event.attendees && event.attendees.length > 0 ? (
               <div className="bg-white shadow overflow-hidden sm:rounded-md">
                 <ul>
-                  {event.attendees.map((attendee) => (
-                    <Attendee {...attendee} />
+                  {event.attendees.map((attendee: Attendee) => (
+                    <AttendeeElement {...attendee} />
                   ))}
                 </ul>
               </div>
@@ -210,4 +207,4 @@ const Event = () => {
   );
 };
 
-export default Event;
+export default EventElement;

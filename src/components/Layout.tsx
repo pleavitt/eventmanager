@@ -3,9 +3,13 @@ import { NavLink, useLocation } from 'react-router-dom';
 import logo from '../logo.svg';
 import Transition from './Transition';
 
-const Layout = (props) => {
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+interface Props {
+  children: React.ReactNode;
+}
+
+const Layout: React.FC<Props> = ({children}) => {
+  const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const location = useLocation();
   const getTitle = () => {
     switch (location.pathname.substring(1)) {
@@ -290,7 +294,7 @@ const Layout = (props) => {
       <main className="-mt-32">
         <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
-            {props.children}
+            {children}
           </div>
         </div>
       </main>

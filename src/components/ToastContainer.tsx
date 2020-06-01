@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Toast from './Toast';
 import { useToast } from './ToastContext';
 
-export default function ToastContainer({ children }) {
+const ToastContainer: React.FC<any> = ({ children }) => {
   const { toasts } = useToast();
 
   if (toasts.length === 0) {
@@ -15,10 +15,10 @@ export default function ToastContainer({ children }) {
     <>
       {children}
       <div className="fixed inset-0 flex flex-col px-4 py-6 pointer-events-none sm:p-6 sm:items-end">
-        {toasts.map(({ content, id }) => {
+        {toasts.map(({ children, id }) => {
           return (
-            <Toast key={id} toastId={id}>
-              {content}
+            <Toast key={id} id={id}>
+              {children}
             </Toast>
           );
         })}
@@ -29,3 +29,5 @@ export default function ToastContainer({ children }) {
 ToastContainer.propTypes = {
   children: PropTypes.node,
 };
+
+export default ToastContainer

@@ -7,6 +7,12 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@types/jest": "^25.2.3",
+    "@types/node": "^14.0.6",
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/react-transition-group": "^4.4.0",
     "autoprefixer": "^9.8.0",
     "axios": "^0.19.2",
     "axios-hooks": "^1.10.0",
@@ -20,7 +26,7 @@
     "react-scripts": "3.4.1",
     "react-transition-group": "^4.4.1",
     "react-use": "^15.1.0",
-    "tailwind": "^4.0.0"
+    "typescript": "^3.9.3"
   },
   "scripts": {
     "start": "npm run watch:css && react-scripts start",
@@ -28,9 +34,10 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build:css": "postcss src/styles/tailwind.css -o src/styles/main.css",
-    "watch:css": "postcss src/styles/tailwind.css -o src/styles/main.css"
+    "watch:css": "postcss src/styles/tailwind.css -o src/styles/main.css",
+    "lint": "eslint . --ext .js,.ts,.tsx",
+    "lint:fix": "eslint . --ext .js,.ts,.tsx --fix"
   },
-  "eslintConfig": {},
   "browserslist": {
     "production": [
       ">0.2%",
