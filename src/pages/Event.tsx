@@ -3,7 +3,12 @@ import { useParams } from 'react-router';
 import { format } from 'date-fns';
 import { useEvents, Attendee, Event } from '../context/EventContext';
 
-const AttendeeElement: React.FC<Attendee>= ({ name, company, guests, tickets }) => {
+const AttendeeElement: React.FC<Attendee> = ({
+  name,
+  company,
+  guests,
+  tickets,
+}) => {
   // const { addToast } = useToast();
   return (
     <li className="border-t border-gray-200">
